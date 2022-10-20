@@ -20,10 +20,10 @@ def root():
 )
 def transcribe(file: UploadFile = File(...)):
     try:
+        time_start = time()
         print("Loading model...")
         model = whisper.load_model("large")
         print("Transcribing... {}".format(file.filename))
-        time_start = time()
         upload_file(file)
         result = model.transcribe(str(UPLOAD_DIR.joinpath(file.filename)), fp16=False)
         delete_file(file)
