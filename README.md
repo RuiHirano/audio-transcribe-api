@@ -12,6 +12,7 @@ make download_model
 
 ```
 make docker_build
+make docker_build_gpu  // for using nvidia gpu
 ```
 
 ## 3. Run Container

@@ -1,5 +1,7 @@
 docker_build:
 	docker build -t audio-transcribe-api .
+docker_build_gpu:
+	docker build -t audio-transcribe-api -f Dockerfile.gpu .
 docker_run:
 	docker run --rm -it \
 		-v `pwd`/models:/root/.cache/whisper \
