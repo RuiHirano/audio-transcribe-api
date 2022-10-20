@@ -7,9 +7,6 @@ from pathlib import Path
 import whisper
 
 app = FastAPI(docs_url="/docs/swagger")
-print("Loading model...")
-model = whisper.load_model("large")
-print("Completed loading model.")
 UPLOAD_DIR = Path.cwd().joinpath("uploads")
 
 @app.get("/health")
@@ -22,9 +19,11 @@ def root():
     description="Transcribe audio file to text",
 )
 def transcribe(file: UploadFile = File(...)):
-    print("Transcribing... {}".format(file.filename))
     try:
         time_start = time()
+        print("Loading model...")
+        model = whisper.load_model("large")
+        print("Transcribing... {}".format(file.filename))
         upload_file(file)
         result = model.transcribe(str(UPLOAD_DIR.joinpath(file.filename)), fp16=False)
         delete_file(file)
