@@ -5,31 +5,30 @@ This is a simple API that transcribes audio files using whisper.
 
 ## 1. Download Model
 ```
-make download_model
+make download-model
 ```
 
 ## 2. Build Image
 
 ```
-make docker_build
-make docker_build_gpu  // for using nvidia gpu
+make docker-build
 ```
 
 ## 3. Run Container
 
 ```
-make docker_run
+make docker-run
 ```
 
 develop mode:
 ```
-make docker_run_dev
+make docker-run-dev
 ```
 
 ## 4. Transcribe
 
 ### Swagger UI
-View at http://localhost:5001/docs/swagger. 
+View at http://localhost:5000/docs/swagger. 
 Send post /transcribe request with audio file.
 
 ### Curl
@@ -37,7 +36,7 @@ This is sample code. (Unconfirmed)
 
 ```bash
 curl -X 'POST' \
-  'http://localhost:5001/transcribe' \
+  'http://localhost:5000/transcribe' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=@sample.wav;type=audio/wav'
@@ -50,7 +49,7 @@ This is sample code. (Unconfirmed)
 fileName = 'demo01.xlsx'
 fileDataBinary = open(fileName, 'rb').read()
 files = {'uploadFile': (fileName, fileDataBinary, 'audio/wav')}
-url = 'http://localhost:5001/transcribe'
+url = 'http://localhost:5000/transcribe'
 response = requests.post(url, files=files)
 ```
 
@@ -61,5 +60,5 @@ ENDPOINT: /health
 Response: 200 OK
 
 ### Transcribe
-ENDPOINT: /transcribe
-Response: 200 { "text": "hogehoge" }, 500 { "detail": "hogehoge" }
+ENDPOINT: /transcribe?language={Language}
+Response: 200 result, 500 { "detail": "hogehoge" }
