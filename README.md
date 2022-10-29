@@ -25,6 +25,8 @@ develop mode:
 make docker-run-dev
 ```
 
+View at http://localhost:5000
+
 ## 4. Transcribe
 
 ### Swagger UI
