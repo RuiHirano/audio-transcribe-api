@@ -1,5 +1,7 @@
 from time import time
-from fastapi import FastAPI, File, UploadFile, HTTPException, Query
+from fastapi import FastAPI, File, UploadFile, HTTPException, Query, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 import uvicorn
 import os
 import shutil
@@ -11,6 +13,16 @@ app = FastAPI(docs_url="/docs/swagger")
 UPLOAD_DIR = Path.cwd().joinpath("uploads")
 print("Loading model...")
 model = whisper.load_model("large", download_root="models")
+
+core_dir = Path(os.path.dirname(__file__)).resolve()
+app.mount("/static", StaticFiles(directory=str(core_dir.joinpath("./website/build/static").resolve())), name="static")
+templates = Jinja2Templates(directory=str(core_dir.joinpath("./website/build").resolve()))
+
+# index page
+@app.get("/")
+async def serve_ui(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
 
 @app.get("/health")
 def root():
