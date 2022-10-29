@@ -2,6 +2,7 @@ docker-build:
 	docker build -t audio-transcribe-api .
 docker-run:
 	docker run --rm -it \
+		-v `pwd`/models:/workspace/models \
 		-p 5000:5000 audio-transcribe-api
 docker-run-dev:
 	docker run --rm -it \
